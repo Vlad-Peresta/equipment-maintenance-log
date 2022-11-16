@@ -1,19 +1,15 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 
 from log.models import (
-    Position,
     EquipmentType,
     BreakdownType,
     TaskType,
     Equipment,
     Breakdown,
     Task,
-    Worker,
 )
 
 
-admin.site.register(Position)
 admin.site.register(EquipmentType)
 admin.site.register(BreakdownType)
 admin.site.register(TaskType)
@@ -40,20 +36,3 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-@admin.register(Worker)
-class WorkerAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ("position",)
-    fieldsets = UserAdmin.fieldsets + (
-        (
-            "Additional info", {"fields": ("position",)}
-        ),
-
-    )
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        (
-            "Additional info",
-            {
-                "fields": ("position",)
-            }
-        ),
-    )
