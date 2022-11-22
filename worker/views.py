@@ -1,8 +1,10 @@
 # from django.shortcuts import render
+from django.views import generic
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm
+from .models import Worker
 
 
 def login_view(request):
@@ -50,3 +52,8 @@ def register_worker(request):
         form = SignUpForm()
 
     return render(request, "registration/register.html", {"form": form, "msg": msg, "success": success})
+
+
+class WorkerListView(generic.ListView):
+    model = Worker
+    template_name = "worker/worker_list.html"
