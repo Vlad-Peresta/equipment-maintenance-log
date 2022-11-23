@@ -65,7 +65,7 @@ class Breakdown(models.Model):
         choices=STATUS_CHOICES,
         default="process"
     )
-    repair_duration = models.DurationField(blank=True)
+    repair_duration = models.DurationField(blank=True, null=True)
 
     class Meta:
         ordering = ["-time"]

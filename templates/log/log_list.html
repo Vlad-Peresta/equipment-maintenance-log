@@ -1,0 +1,54 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+  {% include "includes/navigation-light.html" %}
+  <div class="container mt-5">
+  <div class="row">
+  <h1 class="mb-4">List of Equipment Failures</h1>
+  <div class="col-lg-12 mx-auto">
+  <div class="position-relative overflow-hidden shadow-lg mb-7">
+
+    {% if breakdown_list %}
+    <table class="table table-bordered mb-0">
+      <tr class="thead-dark">
+        <th>ID</th>
+        <th>Equipment</th>
+        <th>Breakdown type</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Repair staff</th>
+      </tr>
+    {% for breakdown in breakdown_list %}
+      <tr>
+        <td>{{ breakdown.id }}</td>
+        <td>{{ breakdown.equipment }}</td>
+        <td>{{ breakdown.breakdown_type }}</td>
+        <td>{{ breakdown.time }}</td>
+        <td>{{ breakdown.status }}</td>
+        <td>
+          <ul class="list-unstyled">
+          {% for worker in breakdown.repair_staff.all %}
+            <li>
+              <a href="">
+                {{ worker.username }}
+              </a>
+            </li>
+          {% empty %}
+            There are no drivers
+          {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+
+    {% else %}
+      <p>There are no entries</p>
+    {% endif %}
+  </div>
+  </div>
+  </div>
+  </div>
+
+{% endblock %}
