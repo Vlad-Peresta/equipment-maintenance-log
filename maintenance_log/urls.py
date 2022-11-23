@@ -22,5 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
-    path("accounts/", include("worker.urls")),
+    path("", include("worker.urls")),
+    path("", include("log.urls")),
+    path("tasks/", include("task.urls"))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
