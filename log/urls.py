@@ -1,11 +1,11 @@
 from django.urls import path, include
 
-from log.views import index, LogListView
+from log.views import index, BreakdownListView
 
 
 app_name = "log"
 
 urlpatterns = [
     path("", index, name="index"),
-    path("logs/", LogListView.as_view(), name="log-list")
+    path("logs/", BreakdownListView.as_view(), name="log-list")
 ]

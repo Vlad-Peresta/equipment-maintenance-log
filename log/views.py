@@ -1,22 +1,33 @@
 from django import template
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
 
-from log.models import Breakdown
+from log.models import Breakdown, Equipment
+from task.models import Task
+from worker.models import Worker
 
 
-# @login_required(login_url="/login/")
 def index(request):
-    context = {'segment': 'index'}
+    staff_amount = Worker.objects.count()
+    equipment_amount = Equipment.objects.count()
+    active_tasks_amount = Task.objects.filter(is_completed=False).count()
+    active_failures_amount = Breakdown.objects.filter(status="process").count()
 
-    html_template = loader.get_template('home/index.html')
-    return HttpResponse(html_template.render(context, request))
+    context = {
+        # 'segment': 'index',
+        "staff_amount": staff_amount,
+        "equipment_amount": equipment_amount,
+        "active_tasks_amount": active_tasks_amount,
+        "active_failures_amount": active_failures_amount,
+    }
+
+    return render(request, "home/index.html", context=context)
 
 
-# @login_required(login_url="/login/")
+
 def pages(request):
     context = {}
     # All resource paths end in .html.
@@ -42,6 +53,6 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 
-class LogListView(generic.ListView):
+class BreakdownListView(generic.ListView):
     model = Breakdown
     template_name = "log/log_list.html"
