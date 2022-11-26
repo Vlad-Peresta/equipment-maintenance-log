@@ -1,5 +1,6 @@
 # from django.shortcuts import render
 from django.views import generic
+from django.urls import reverse_lazy
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -57,3 +58,8 @@ def register_worker(request):
 class WorkerListView(generic.ListView):
     model = Worker
     template_name = "worker/worker_list.html"
+
+
+class WorkerDetailView(generic.DetailView):
+    model = Worker
+    template_name = "worker/worker_detail.html"
