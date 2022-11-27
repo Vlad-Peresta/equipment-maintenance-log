@@ -12,6 +12,15 @@
           <a href="{% url 'worker:worker-list' %}" class="dropdown-item border-radius-md">
             Qualified Technical Staff
           </a>
+
+          <a href="{% url 'worker:worker-create' %}" class="dropdown-item border-radius-md">
+            Register new worker
+          </a>
+
+          <a href="{% url 'worker:worker-detail' pk=user.id %}" class="dropdown-item border-radius-md">
+            Personal data
+          </a>
+
         </div>
       </div>
     </li>

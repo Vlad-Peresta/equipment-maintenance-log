@@ -1,4 +1,5 @@
 from django import template
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
@@ -10,6 +11,7 @@ from task.models import Task
 from worker.models import Worker
 
 
+@login_required
 def index(request):
     staff_amount = Worker.objects.count()
     equipment_amount = Equipment.objects.count()

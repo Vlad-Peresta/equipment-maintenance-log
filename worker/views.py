@@ -1,10 +1,10 @@
-# from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, WorkerUpdateForm
 from .models import Worker
 
 
@@ -21,7 +21,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect(reverse_lazy("worker:worker-list"))
             else:
                 msg = 'Invalid credentials'
         else:
@@ -41,11 +41,11 @@ def register_worker(request):
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
+            login(request, user)
 
-            msg = 'User created - please <a href="/login">login</a>.'
             success = True
 
-            # return redirect("/login/")
+            return redirect(reverse_lazy("log:index"))
 
         else:
             msg = 'Form is not valid'
@@ -55,11 +55,31 @@ def register_worker(request):
     return render(request, "registration/register.html", {"form": form, "msg": msg, "success": success})
 
 
-class WorkerListView(generic.ListView):
+class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     template_name = "worker/worker_list.html"
 
 
-class WorkerDetailView(generic.DetailView):
+class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
     template_name = "worker/worker_detail.html"
+
+
+class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Worker
+    form_class = SignUpForm
+    template_name = "registration/register.html"
+    success_url = reverse_lazy("worker:worker-list")
+
+
+class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Worker
+    form_class = WorkerUpdateForm
+    success_url = reverse_lazy("worker:worker-list")
+
+
+class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Worker
+    success_url = reverse_lazy("worker:worker-list")
+    template_name = "worker/worker_detail.html"
+

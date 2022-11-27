@@ -10,7 +10,7 @@
 {% block content %}
 
   {% include "includes/navigation.html" %}
-
+  {% include "includes/modal_delete_worker.html" %}
   <section>
     <div class="page-header section-height-100">
       <div class="container">
@@ -64,15 +64,21 @@
               </div>
 
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                <a href="" class="btn bg-gradient-primary w-auto me-1 mb-0">
+                <a href="{% url 'worker:worker-update' pk=worker.id %}"
+                   class="btn bg-gradient-primary w-auto me-1 mb-1">
                   Update date
                 </a>
 
-                <a href="{% url 'worker:worker-list' %}" class="btn bg-gradient-primary w-auto me-1 mb-0">
+                <a href="{{ request.META.HTTP_REFERER }}" class="btn bg-gradient-primary w-auto me-1 mb-1">
                   Back
                 </a>
 
-                <a href="" class="btn bg-gradient-danger w-auto me-1 mb-0">
+                <!-- Button trigger modal -->
+                <a href="{% url 'worker:worker-delete' pk=worker.id %}"
+                   type="button" class="btn bg-gradient-danger w-auto me-1 mb-1"
+                   data-bs-toggle="modal"
+                   data-bs-target="#modal_delete_worker"
+                >
                   Delete account
                 </a>
 

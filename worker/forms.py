@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from worker.models import Worker
+from worker.models import Worker, Position
 
 
 class LoginForm(forms.Form):
@@ -32,11 +32,28 @@ class SignUpForm(UserCreationForm):
             }
         )
     )
-    position = forms.CharField(
+    first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Position",
+                "placeholder": "First name",
                 "class": "form-control"
+            }
+        )
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Last name",
+                "class": "form-control"
+            }
+        )
+    )
+    position = forms.ModelChoiceField(
+        queryset=Position.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "class": "dropdown-item border-radius-md",
+                "name": "Bsdhejfg"
             }
         )
     )
@@ -67,5 +84,56 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = Worker
-        fields = ('username', "position", 'email', 'password1', 'password2')
+        fields = (
+            'username', "first_name", "last_name", "position", 'email', 'password1', 'password2'
+        )
 
+
+class WorkerUpdateForm(forms.ModelForm):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Username",
+                "class": "form-control"
+            }
+        )
+    )
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "First name",
+                "class": "form-control"
+            }
+        )
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Last name",
+                "class": "form-control"
+            }
+        )
+    )
+    position = forms.ModelChoiceField(
+        queryset=Position.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "class": "dropdown-item border-radius-md",
+                "name": "Bsdhejfg"
+            }
+        )
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                "placeholder": "Email",
+                "class": "form-control"
+            }
+        )
+    )
+
+    class Meta:
+        model = Worker
+        fields = (
+            'username', "first_name", "last_name", "position", 'email',
+        )

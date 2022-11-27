@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = "worker.Worker"
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = reverse_lazy("log:index")
 
 LOGOUT_REDIRECT_URL = reverse_lazy("worker:worker-login")
 
