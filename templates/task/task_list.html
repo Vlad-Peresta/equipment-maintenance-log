@@ -4,39 +4,39 @@
 
   {% include "includes/navigation-light.html" %}
   <div class="container mt-5">
-  <div class="row">
-  <h1 class="mb-4">Task List</h1>
-  <div class="col-lg-12 mx-auto">
-  <div class="position-relative overflow-hidden shadow-lg mb-7">
+    <div class="row">
+      <h1 class="mb-4">Task List</h1>
+      <div class="col-lg-12 mx-auto">
+        <div class="position-relative overflow-hidden shadow-lg mb-7">
 
-    {% if task_list %}
-    <table class="table table-bordered mb-0">
-      <tr class="thead-dark">
-        <th>ID</th>
-        <th>Task type</th>
-        <th>Name</th>
-        <th>Priority</th>
-        <th>Deadline</th>
-        <th>Is completed</th>
-      </tr>
-    {% for task in task_list %}
-      <tr>
-        <td>{{ task.id }}</td>
-        <td>{{ task.task_type }}</td>
-        <td>{{ task.name }}</td>
-        <td>{{ task.priority }}</td>
-        <td>{{ task.deadline }}</td>
-        <td>{{ task.is_completed }}</td>
-      </tr>
-    {% endfor %}
-    </table>
+          {% if task_list %}
+            <table class="table table-bordered mb-0">
+              <tr class="thead-dark">
+                <th>ID</th>
+                <th>Task type</th>
+                <th>Name</th>
+                <th>Priority</th>
+                <th>Deadline</th>
+                <th>Is completed</th>
+              </tr>
+              {% for task in task_list %}
+                <tr>
+                  <td>{{ task.id }}</td>
+                  <td>{{ task.task_type }}</td>
+                  <td>{{ task.name }}</td>
+                  <td>{{ task.priority }}</td>
+                  <td>{{ task.deadline }}</td>
+                  <td>{{ task.is_completed }}</td>
+                </tr>
+              {% endfor %}
+            </table>
 
-    {% else %}
-      <p>There are no tasks</p>
-    {% endif %}
-  </div>
-  </div>
-  </div>
+          {% else %}
+            <p>There are no tasks</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
   </div>
 
 {% endblock %}
