@@ -7,25 +7,27 @@
 
   <div class="container mt-5">
     <div class="row">
-      <div>
-        <h1 class="mb-4">
-          Task types
-          <a href="{% url 'task:task-type-create' %}" class="btn btn-primary btn-lg float-end  mt-2">Create new task type</a>
-        </h1>
 
-      </div>
+      <h1 class="mb-4">
+        Task types
+        <a href="{% url 'task:task-type-create' %}" class="btn btn-primary btn-lg float-end  mt-2">Create new task
+          type</a>
+      </h1>
 
-      <div class="input-group mb-4">
-        <input type="text" class="form-control" placeholder="Search by task type">
-        <button class="btn btn-outline-primary mb-0 fas fa-search" type="button"></button>
-      </div>
-
+      <form action="" method="get">
+        <div class="form-group mb-4">
+          <div class="input-group">
+            {{ search_form.searched_task_type }}
+            <button class="btn btn-outline-primary mb-0 fas fa-search" type="submit"></button>
+          </div>
+        </div>
+      </form>
 
       <div class="col-lg-12 mx-auto">
         <div class="position-relative overflow-hidden shadow-lg mb-7">
 
           {% if task_type_list %}
-            <table class="table table-bordered mb-0  table-hover">
+            <table class="table table-bordered mb-0 table-hover">
               <tr class="thead-dark" style="transform: rotate(0);">
                 <th>ID</th>
                 <th>Task type name</th>
@@ -45,7 +47,7 @@
             </table>
 
           {% else %}
-            <p>There are no tasks</p>
+            <p>There are no task types</p>
           {% endif %}
         </div>
       </div>
