@@ -1,6 +1,5 @@
+from django.contrib.auth import get_user_model
 from django.db import models
-
-from worker.models import Worker
 
 
 class EquipmentType(models.Model):
@@ -17,9 +16,7 @@ class Equipment(models.Model):
     name = models.CharField(max_length=127, unique=True)
     inventory_number = models.CharField(max_length=63, unique=True)
     type = models.ForeignKey(
-        EquipmentType,
-        on_delete=models.CASCADE,
-        related_name="equipment"
+        EquipmentType, on_delete=models.CASCADE, related_name="equipment"
     )
 
     class Meta:
@@ -42,30 +39,23 @@ class BreakdownType(models.Model):
 
 
 class Breakdown(models.Model):
-    STATUS_CHOICES = (
-        ("completed", "Completed"),
-        ("process", "In process")
-    )
+    STATUS_CHOICES = (("completed", "Completed"), ("process", "In process"))
 
     equipment = models.ForeignKey(
-        Equipment,
-        on_delete=models.CASCADE,
-        related_name="breakdowns"
+        Equipment, on_delete=models.CASCADE, related_name="breakdowns"
     )
-    repair_staff = models.ManyToManyField(Worker)
+    repair_staff = models.ManyToManyField(
+        get_user_model(), related_name="breakdowns"
+    )
     breakdown_type = models.ForeignKey(
-        BreakdownType,
-        on_delete=models.CASCADE,
-        related_name="breakdown_types"
+        BreakdownType, on_delete=models.CASCADE, related_name="breakdowns"
     )
     circumstance = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
-        max_length=10,
-        choices=STATUS_CHOICES,
-        default="process"
+        max_length=10, choices=STATUS_CHOICES, default="process"
     )
-    repair_duration = models.DurationField(blank=True, null=True)
+    repair_duration = models.IntegerField(null=True, blank=True)
 
     class Meta:
         ordering = ["-time"]
