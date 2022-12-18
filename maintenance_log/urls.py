@@ -6,8 +6,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('__debug__/', include('debug_toolbar.urls')),
-    path("", include("worker.urls")),
-    path("", include("log.urls")),
-    path("tasks/", include("task.urls"))
+    path("__debug__/", include("debug_toolbar.urls")),
+    path("", include("worker.urls", namespace="worker")),
+    path("", include("log.urls", namespace="log")),
+    path("tasks/", include("task.urls", namespace="task")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
