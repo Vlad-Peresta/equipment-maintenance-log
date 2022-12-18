@@ -6,9 +6,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/apple-icon.png' %}">
-  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
-  <link rel="canonical" href="https://appseed.us/ui-kit/soft-ui-design-system"/>
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/tool-logo.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'assets/img/tool-logo.png' %}">
   
   <title>
     Equipment Maintenance Log - {% block title %}{% endblock %}
@@ -29,7 +28,7 @@
   {% block stylesheets %}{% endblock stylesheets %}
 
 </head>
-<body class="{% block body_class %}{% endblock body_class %}">
+<body class="{% block body_class %}{% endblock body_class %} d-flex flex-column min-vh-100">
 
     {% block content %}{% endblock content %}
   
