@@ -1,12 +1,12 @@
 {% extends 'layouts/base-fullscreen.html' %}
 {% load static %}
 
-{% block title %} Sign UP {% endblock title %}
+{% block title %} {{ object|yesno:"Update credentials data,Register new worker" }} {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-{% block body_class %} sign-in-illustrationaghsedg {% endblock body_class %}
+{% block body_class %} {{ object|yesno:"Update credentials data,Register new worker" }} {% endblock body_class %}
 
 {% block content %}
 
@@ -16,15 +16,15 @@
     <div class="page-header section-height-100">
       <div class="container">
         <div class="row">
-          <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-            <div class="card card-plain">
+          <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto mt-4">
+            <div class="card card-plain mt-6">
               <div class="card-header pb-0 text-left">
 
                 <h4 class="font-weight-bolder">
-                  {{ object|yesno:"Update your credentials data,Register new worker" }}
+                  {{ object|yesno:"Update credentials data,Register new worker" }}
                 </h4>
                 <p class="mb-0">
-                  {{ object|yesno:"Add your credentials,Add credentials of new worker" }}
+                  {{ object|yesno:"Change credentials,Add credentials of new worker" }}
                 </p>
 
               </div>
@@ -48,8 +48,7 @@
                   </div>
                   <span class="text-error">{{ form.last_name.errors }}</span>
 
-                  <div class="dropdown mb-3"
-                       style="border-radius: 0.5rem; line-height: 1.4rem; border: 1px solid #d2d6da;">
+                  <div class="mb-3">
                     {{ form.position }}
                   </div>
                   <span class="text-error">{{ form.position.errors }}</span>
@@ -62,12 +61,12 @@
                   <div class="text-center">
                     <button
                         type="submit"
-                        class="btn bg-gradient-primary w-auto me-1 mb-0"
+                        class="btn bg-gradient-primary w-auto me-1 mb-1 mt-2"
                     >
                       {{ object|yesno:"Update,Register" }}
                     </button>
 
-                    <a href="{{ request.META.HTTP_REFERER }}" class="btn bg-gradient-primary w-auto me-1 mb-0">
+                    <a href="{{ request.META.HTTP_REFERER }}" class="btn bg-gradient-primary w-auto me-1 mb-1 mt-2">
                       Back
                     </a>
 
@@ -85,18 +84,12 @@
                    class="position-absolute opacity-4 start-0">
               <div class="position-relative">
                 <img class="max-width-500 w-100 position-relative z-index-2"
-                     src="{% static 'assets/img/illustrations/chat.png' %}">
+                     src="{% static 'assets/img/credentials_data.png' %}">
               </div>
-              <h4 class="mt-5 text-white font-weight-bolder">
-                Soft UI Design System
-              </h4>
-              <p class="text-white">
-                &copy; <a target="_blank" class="text-white" href="https://bit.ly/3fKQZaL" target="_blank">Creative
-                Tim</a>
-                - Coded by <a class="text-white" target="_blank" href="https://appseed.us" target="_blank">AppSeed</a>.
-              </p>
+
             </div>
           </div>
+
         </div>
       </div>
     </div>
