@@ -14,9 +14,7 @@ class Position(models.Model):
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
-        Position,
-        on_delete=models.CASCADE,
-        related_name="workers"
+        Position, on_delete=models.CASCADE, related_name="workers"
     )
 
     class Meta:
@@ -25,4 +23,4 @@ class Worker(AbstractUser):
         verbose_name_plural = "workers"
 
     def __str__(self):
-        return f"{self.first_name}, {self.last_name} ({self.username})"
+        return f"{self.first_name} {self.last_name} ({self.username})"
