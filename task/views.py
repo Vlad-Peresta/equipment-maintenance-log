@@ -17,7 +17,7 @@ from task.models import Task, TaskType
 
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
-    queryset = Task.objects.all()
+    queryset = Task.objects.select_related("task_type")
     paginate_by = 8
     template_name = "task/task_list.html"
 

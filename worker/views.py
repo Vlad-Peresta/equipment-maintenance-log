@@ -55,7 +55,7 @@ def register_worker(request):
 
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = get_user_model()
-    queryset = get_user_model().objects.all()
+    queryset = get_user_model().objects.select_related("position")
     paginate_by = 8
     template_name = "worker/worker_list.html"
 

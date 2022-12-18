@@ -45,7 +45,9 @@ def index(request):
 
 class BreakdownListView(LoginRequiredMixin, generic.ListView):
     model = Breakdown
-    queryset = Breakdown.objects.all()
+    queryset = Breakdown.objects.prefetch_related(
+        "repair_staff", "equipment__type", "breakdown_type"
+    )
     paginate_by = 8
     template_name = "log/log_list.html"
 
@@ -175,7 +177,7 @@ class EquipmentTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class EquipmentListView(LoginRequiredMixin, generic.ListView):
     model = Equipment
-    queryset = Equipment.objects.all()
+    queryset = Equipment.objects.select_related("type")
     paginate_by = 8
     template_name = "log/equipment_list.html"
 
