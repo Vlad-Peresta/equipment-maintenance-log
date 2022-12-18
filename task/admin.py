@@ -7,5 +7,9 @@ admin.site.register(TaskType)
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("name", "is_completed", "task_type",)
+    list_display = (
+        "name",
+        "is_completed",
+        "task_type",
+    )
     search_fields = ("name",)

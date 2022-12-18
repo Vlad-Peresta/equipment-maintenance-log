@@ -1,28 +1,36 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse_lazy
 
-from task.forms import TaskTypeForm, TaskForm, TaskSearchForm, TaskTypeSearchForm
+from task.forms import (
+    TaskTypeForm,
+    TaskForm,
+    TaskSearchForm,
+    TaskTypeSearchForm,
+)
 from task.models import Task, TaskType
 
 
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     queryset = Task.objects.all()
+    paginate_by = 8
     template_name = "task/task_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TaskListView, self).get_context_data(**kwargs)
 
-        task_type = self.request.GET.get("searched_task_type", "")
-        name = self.request.GET.get("searched_name", "")
+        searched_task = self.request.GET.get("searched_task", "")
         is_completed = self.request.GET.get("searched_complete_status", "")
 
         context["search_form"] = TaskSearchForm(
             initial={
-                "searched_task_type": task_type,
-                "searched_name": name,
-                "searched_complete_status": is_completed
+                "searched_task": searched_task,
+                "searched_complete_status": is_completed,
             }
         )
 
@@ -33,27 +41,30 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
         queryset = self.queryset
 
         if form.is_valid():
+            task_type_name = Q(
+                task_type__name__icontains=form.cleaned_data["searched_task"]
+            )
             is_completed = form.cleaned_data["searched_complete_status"]
             queryset = queryset.filter(
-                name__icontains=form.cleaned_data["searched_name"],
-                task_type__name__icontains=form.cleaned_data["searched_task_type"],
+                Q(name__icontains=form.cleaned_data["searched_task"])
+                | task_type_name
             )
 
             if is_completed:
                 queryset = queryset.filter(is_completed=False)
 
-        return queryset
+        return queryset.distinct()
 
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     fields = (
-            "task_type",
-            "name",
-            "priority",
-            "deadline",
-            "description",
-            "assignees"
+        "task_type",
+        "name",
+        "priority",
+        "deadline",
+        "description",
+        "assignees",
     )
     template_name = "task/task_detail.html"
 
@@ -81,6 +92,7 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
 class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     model = TaskType
     queryset = TaskType.objects.all()
+    paginate_by = 8
     template_name = "task/task_type_list.html"
     context_object_name = "task_type_list"
 
@@ -124,3 +136,27 @@ class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "task/task_type_form.html"
     success_url = reverse_lazy("task:task-type-list")
     context_object_name = "task_type"
+
+
+@login_required
+def toggle_assign_task(request, pk):
+    worker = get_user_model().objects.get(id=request.user.id)
+    task = Task.objects.get(id=pk)
+
+    if task in worker.tasks.all():
+        worker.tasks.remove(task)
+    else:
+        worker.tasks.add(task)
+
+    return HttpResponseRedirect(reverse_lazy("task:task-list"))
+
+
+@login_required
+def toggle_perform_task(request, pk):
+    task = Task.objects.get(id=pk)
+
+    if not task.is_completed:
+        task.is_completed = True
+        task.save()
+
+    return HttpResponseRedirect(reverse_lazy("task:task-list"))

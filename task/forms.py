@@ -1,16 +1,13 @@
 from django import forms
+from django.contrib.auth import get_user_model
 
 from task.models import TaskType, Task
-from worker.models import Worker
 
 
 class TaskTypeForm(forms.ModelForm):
     name = forms.CharField(
         widget=forms.TextInput(
-            attrs={
-                "placeholder": "Task type name",
-                "class": "form-control"
-            }
+            attrs={"placeholder": "Task type name", "class": "form-control"}
         )
     )
 
@@ -23,18 +20,11 @@ class TaskForm(forms.ModelForm):
     task_type = forms.ModelChoiceField(
         queryset=TaskType.objects.all(),
         empty_label="Task type",
-        widget=forms.Select(
-            attrs={
-                "class": "form-select"
-            }
-        )
+        widget=forms.Select(attrs={"class": "form-select"}),
     )
     name = forms.CharField(
         widget=forms.TextInput(
-            attrs={
-                "placeholder": "Task name",
-                "class": "form-control"
-            }
+            attrs={"placeholder": "Task name", "class": "form-control"}
         )
     )
     priority = forms.ChoiceField(
@@ -43,7 +33,7 @@ class TaskForm(forms.ModelForm):
             attrs={
                 "class": "form-select",
             }
-        )
+        ),
     )
     deadline = forms.DateField(
         widget=forms.DateInput(
@@ -55,19 +45,15 @@ class TaskForm(forms.ModelForm):
         )
     )
     description = forms.CharField(
-        widget=forms.Textarea(
-            attrs={
-                "class": "form-control"
-            }
-        )
+        widget=forms.Textarea(attrs={"class": "form-control"})
     )
     assignees = forms.ModelMultipleChoiceField(
-        queryset=Worker.objects.all(),
+        queryset=get_user_model().objects.all(),
         widget=forms.SelectMultiple(
             attrs={
                 "class": "form-select",
             }
-        )
+        ),
     )
 
     class Meta:
@@ -78,28 +64,19 @@ class TaskForm(forms.ModelForm):
             "priority",
             "deadline",
             "description",
-            "assignees"
+            "assignees",
         )
 
 
 class TaskSearchForm(forms.Form):
-    searched_task_type = forms.CharField(
+    searched_task = forms.CharField(
         required=False,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Search by task type",
-                "class": "form-control"
+                "placeholder": "Search by task type or name",
+                "class": "form-control",
             }
-        )
-    )
-    searched_name = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-                "placeholder": "Search by task name",
-                "class": "form-control"
-            }
-        )
+        ),
     )
     searched_complete_status = forms.BooleanField(
         required=False,
@@ -109,7 +86,7 @@ class TaskSearchForm(forms.Form):
                 "class": "form-check-input",
                 "onclick": "this.form.submit();",
             }
-        )
+        ),
     )
 
 
@@ -121,5 +98,5 @@ class TaskTypeSearchForm(forms.Form):
                 "placeholder": "Search by task type name",
                 "class": "form-control"
             }
-        )
+        ),
     )
