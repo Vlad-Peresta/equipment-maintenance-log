@@ -22,6 +22,7 @@ class EquipmentAdmin(admin.ModelAdmin):
 @admin.register(Breakdown)
 class BreakdownAdmin(admin.ModelAdmin):
     list_display = (
-        "equipment", "breakdown_type", "time", "repair_duration", "status",)
+        "equipment", "breakdown_type", "time", "repair_duration", "status",
+    )
     search_fields = ("equipment", "breakdown_type",)
     list_filter = ("equipment", "repair_staff", "breakdown_type", "time",)
