@@ -148,7 +148,7 @@ class EquipmentTypeListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         form = EquipmentTypeSearchForm(self.request.GET)
         if form.is_valid():
-            return Equipment.objects.filter(
+            return EquipmentType.objects.filter(
                 name__icontains=form.cleaned_data["searched_equipment_type"]
             )
 
@@ -272,6 +272,7 @@ class BreakdownTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class BreakdownTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = BreakdownType
+    template_name = "log/breakdown_type_form.html"
     context_object_name = "breakdown_type"
     success_url = reverse_lazy("log:breakdown-type-list")
 

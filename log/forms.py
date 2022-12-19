@@ -1,7 +1,12 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
-from log.models import EquipmentType, Equipment, BreakdownType, Breakdown
+from log.models import (
+    Breakdown,
+    BreakdownType,
+    Equipment,
+    EquipmentType,
+)
 
 
 class EquipmentTypeForm(forms.ModelForm):
