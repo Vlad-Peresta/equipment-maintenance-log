@@ -284,7 +284,7 @@ class Migration(migrations.Migration):
                         max_length=10,
                     ),
                 ),
-                ("repair_duration", models.DurationField(blank=True)),
+                ("repair_duration", models.IntegerField(blank=True)),
                 (
                     "breakdown_type",
                     models.ForeignKey(

@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='breakdown',
             name='repair_duration',
-            field=models.DurationField(blank=True, null=True),
+            field=models.IntegerField(blank=True, null=True),
         ),
     ]
