@@ -69,7 +69,7 @@ class BreakdownTypeForm(forms.ModelForm):
 
 class BreakdownForm(forms.ModelForm):
     equipment = forms.ModelChoiceField(
-        queryset=Equipment.objects.all(),
+        queryset=Equipment.objects.select_related("type"),
         empty_label="Equipment",
         widget=forms.Select(attrs={"class": "form-select"}),
     )
