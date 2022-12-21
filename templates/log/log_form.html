@@ -49,11 +49,6 @@
                   <span class="text-error">{{ form.repair_staff.errors }}</span>
 
                   <div class="mb-3">
-                    {{ form.circumstance }}
-                  </div>
-                  <span class="text-error">{{ form.circumstance.errors }}</span>
-
-                  <div class="mb-3">
                     {{ form.status }}
                   </div>
                   <span class="text-error">{{ form.status.errors }}</span>
@@ -62,6 +57,12 @@
                     {{ form.repair_duration }}
                   </div>
                   <span class="text-error">{{ form.starepair_durationtus.errors }}</span>
+
+                  <div class="mb-3">
+                    <label>{{ form.circumstance.label }}</label>
+                    {{ form.circumstance }}
+                  </div>
+                  <span class="text-error">{{ form.circumstance.errors }}</span>
 
                   <div class="text-center mt-4">
                     <button
@@ -107,7 +108,8 @@
 
                         <div class="col-md-6 position-relative">
                           <div class="p-3 text-center">
-                            <h1 class="text-gradient text-primary" id="equipment_number" countTo="{% equipment_number %}">
+                            <h1 class="text-gradient text-primary" id="equipment_number"
+                                countTo="{% equipment_number %}">
                               0</h1>
                             <h5 class="mt-3">Number of equipment</h5>
                             <p class="text-sm">the total number of production equipment</p>

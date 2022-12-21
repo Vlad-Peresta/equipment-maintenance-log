@@ -59,15 +59,6 @@
                 </nav>
 
                 <nav aria-label="breadcrumb">
-                  <label>Circumstance</label>
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">
-                      {{ breakdown.circumstance }}
-                    </li>
-                  </ol>
-                </nav>
-
-                <nav aria-label="breadcrumb">
                   <label>Status</label>
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -85,6 +76,15 @@
                   </ol>
                 </nav>
 
+                <nav aria-label="breadcrumb">
+                  <label>Circumstance</label>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                      {{ breakdown.circumstance }}
+                    </li>
+                  </ol>
+                </nav>
+
               </div>
 
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
@@ -93,11 +93,11 @@
                   Update date
                 </a>
 
-                {% if not log.status == "process" %}
+                {% if breakdown.status == "process" %}
                   <a href="{% url 'log:toggle-perform-repair' pk=breakdown.id %}"
-                   class="btn bg-gradient-success w-auto me-1 mb-1 mt-2">
-                  Completed
-                </a>
+                     class="btn bg-gradient-success w-auto me-1 mb-1 mt-2">
+                    Completed
+                  </a>
                 {% endif %}
 
                 <!-- Button trigger modal -->
@@ -142,7 +142,8 @@
 
                         <div class="col-md-6 position-relative">
                           <div class="p-3 text-center">
-                            <h1 class="text-gradient text-primary" id="equipment_number" countTo="{% equipment_number %}">
+                            <h1 class="text-gradient text-primary" id="equipment_number"
+                                countTo="{% equipment_number %}">
                               0</h1>
                             <h5 class="mt-3">Number of equipment</h5>
                             <p class="text-sm">the total number of production equipment</p>
