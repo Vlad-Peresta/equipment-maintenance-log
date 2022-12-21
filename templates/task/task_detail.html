@@ -63,15 +63,6 @@
                 </nav>
 
                 <nav aria-label="breadcrumb">
-                  <label>Description</label>
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">
-                      {{ task.description }}
-                    </li>
-                  </ol>
-                </nav>
-
-                <nav aria-label="breadcrumb">
                   <label>Assignees</label>
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -85,6 +76,15 @@
                         {% endfor %}
                       </ul>
 
+                    </li>
+                  </ol>
+                </nav>
+
+                <nav aria-label="breadcrumb">
+                  <label>Description</label>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                      {{ task.description }}
                     </li>
                   </ol>
                 </nav>

@@ -57,14 +57,15 @@
                   <span class="text-error">{{ form.deadline.errors }}</span>
 
                   <div class="mb-3">
-                    {{ form.description }}
-                  </div>
-                  <span class="text-error">{{ form.description.errors }}</span>
-
-                  <div class="mb-3">
                     {{ form.assignees }}
                   </div>
                   <span class="text-error">{{ form.assignees.errors }}</span>
+
+                  <div class="mb-3">
+                    <label>{{ form.description.label }}</label>
+                    {{ form.description }}
+                  </div>
+                  <span class="text-error">{{ form.description.errors }}</span>
 
                   <div class="text-center mt-4">
                     <button
